@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  api-school:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-school
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db-school
+    networks:
+      - network-school
+    links:
+      - db-school
+
+  db-school:
+    image: mysql:8.0
+    container_name: db-school
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=school
+      - MYSQL_ROOT_USER=root
+
+networks:
+  network-school:
+    driver: bridge
